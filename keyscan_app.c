@@ -330,15 +330,15 @@ static void kbapp_processKeyEvents(void* unused)
     } /* while loop to process up/down keyevents from the keyscan block */
 } /* kbapp_processKeyEvents */
 
-/**
+
+/*******************************************************************************
  * @brief kbapp_init function is the entry point for the keyboard scanner
  *        application logic.
  *
  * @param void
  *
  * @return void
- */
-
+*******************************************************************************/
 static void kbapp_init(void)
 {
 

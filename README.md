@@ -143,6 +143,7 @@ Document Title: CE229928 - CYW208xx - HAL Keyboard Scanner
 | Version | Description of Change |
 | ------- | --------------------- |
 | 1.0.0   | New code example      |
+| 1.1.0   | Folders Restructured  |
 
 ------
 
