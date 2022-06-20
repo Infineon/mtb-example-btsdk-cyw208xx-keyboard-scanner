@@ -9,23 +9,24 @@
 *
 * Related Document: See Readme.md
 *
-*******************************************************************************
-* (c) (insert year or range of years per Section 8.2.1 of 00-00101), Cypress Semiconductor Corporation. All rights reserved.
-*******************************************************************************
-* This software, including source code, documentation and related materials
-* ("Software"), is owned by Cypress Semiconductor Corporation or one of its
-* subsidiaries ("Cypress") and is protected by and subject to worldwide patent
-* protection (United States and foreign), United States copyright laws and
-* international treaty provisions. Therefore, you may use this Software only
-* as provided in the license agreement accompanying the software package from
-* which you obtained this Software ("EULA").
+********************************************************************************
+* Copyright 2020-2022, Cypress Semiconductor Corporation (an Infineon company) or
+* an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
+* This software, including source code, documentation and related
+* materials ("Software") is owned by Cypress Semiconductor Corporation
+* or one of its affiliates ("Cypress") and is protected by and subject to
+* worldwide patent protection (United States and foreign),
+* United States copyright laws and international treaty provisions.
+* Therefore, you may use this Software only as provided in the license
+* agreement accompanying the software package from which you
+* obtained this Software ("EULA").
 * If no EULA applies, Cypress hereby grants you a personal, non-exclusive,
-* non-transferable license to copy, modify, and compile the Software source
-* code solely for use in connection with Cypress's integrated circuit products.
-* Any reproduction, modification, translation, compilation, or representation
-* of this Software except as specified above is prohibited without the express
-* written permission of Cypress.
+* non-transferable license to copy, modify, and compile the Software
+* source code solely for use in connection with Cypress's
+* integrated circuit products.  Any reproduction, modification, translation,
+* compilation, or representation of this Software except as specified
+* above is prohibited without the express written permission of Cypress.
 *
 * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
@@ -36,9 +37,9 @@
 * not authorize its products for use in any products where a malfunction or
 * failure of the Cypress product may reasonably be expected to result in
 * significant property damage, injury or death ("High Risk Product"). By
-* including Cypress's product in a High Risk Product, the manufacturer of such
-* system or application assumes all risk of such use and in doing so agrees to
-* indemnify Cypress against all liability.
+* including Cypress's product in a High Risk Product, the manufacturer
+* of such system or application assumes all risk of such use and in doing
+* so agrees to indemnify Cypress against all liability.
 *******************************************************************************/
 
 /*******************************************************************************
@@ -63,6 +64,7 @@
 /*******************************************************************************
  *                      Includes
  ******************************************************************************/
+
 #include "wiced_bt_dev.h"
 #include "wiced_bt_stack.h"
 #include "wiced_bt_trace.h"
@@ -74,9 +76,8 @@
 #include "wiced_sleep.h"
 #include "wiced.h"
 
-
 /*******************************************************************************
- *                      Constants
+ *                      Macros
  ******************************************************************************/
 /* Macro to enable and disable low power */
 #define LOW_POWER_ENABLE
@@ -125,7 +126,7 @@ static wiced_timer_t            keydown_repeat_timer;
 static uint8_t                  volatile keycode = EVENT_NONE;
 
 /* counter increments on every KEYDOWN_EVENT_REPEAT_MONITOR_MS for keypress */
-static uint8_t                  volatile counter = 0;
+static uint8_t                  counter = 0;
 
 #ifdef LOW_POWER_ENABLE
 /*
@@ -154,7 +155,6 @@ kb_management_cback(wiced_bt_management_evt_t event,
 
 #ifdef LOW_POWER_ENABLE
 static void post_sleep_callback (wiced_bool_t restore_configuration);
-
 static wiced_result_t
 keyscan_configure_sleep(wiced_sleep_config_t app_sleep_config);
 
@@ -166,6 +166,7 @@ static uint32_t keyscan_sleep_handler(wiced_sleep_poll_type_t type);
  ******************************************************************************/
 
 /*******************************************************************************
+ * Function Name: kbapp_map_columns
  * @brief kbapp_map_columns() functions maps the Keyscan columns to the desired
  *        LHL GPIOs and this is required when the device wakes up from sleep.
  *
@@ -186,10 +187,8 @@ static void kbapp_map_columns(void)
 
 }
 
-
 /*******************************************************************************
- * Function Name:
- kbapp_procErrKeyscan
+ * Function Name: kbapp_procErrKeyscan
 
  Function Description:
  @brief  This function handles error events reported by the keyscan HW.
@@ -224,8 +223,7 @@ static void kbapp_procErrKeyscan(void)
 
 
 /*******************************************************************************
- * Function Name:
- kbapp_keyDownRepeatMonitor_cb
+ * Function Name: kbapp_keyDownRepeatMonitor_cb
 
  Function Description:
  @brief  Keydown repeat event monitor function. This callback function will be
@@ -252,8 +250,7 @@ static void kbapp_keyDownRepeatMonitor_cb(uint32_t unused)
 
 
 /*******************************************************************************
- * Function Name:
- kbapp_processKeyEvents
+ * Function Name: kbapp_processKeyEvents
 
  Function Description:
  @brief  This function polls for key activity and queues any key events in the
@@ -332,6 +329,7 @@ static void kbapp_processKeyEvents(void* unused)
 
 
 /*******************************************************************************
+ * Function Name: kbapp_init
  * @brief kbapp_init function is the entry point for the keyboard scanner
  *        application logic.
  *
@@ -386,8 +384,8 @@ static void kbapp_init(void)
         }
 
         /* Register for event notification callback */
-        wiced_hal_keyscan_register_for_event_notification(kbapp_processKeyEvents
-                                                         , NULL);
+        wiced_hal_keyscan_register_for_event_notification(kbapp_processKeyEvents,
+                                                          NULL);
         wiced_hal_mia_enable_mia_interrupt(WICED_TRUE);
         wiced_hal_mia_enable_lhl_interrupt(WICED_TRUE);
 
@@ -397,9 +395,7 @@ static void kbapp_init(void)
 }
 
 /*******************************************************************************
- * Function Name:
- kb_management_cback
-
+ * Function Name: kb_management_cback
 
  Function Description:
  @brief  Callback function that will be invoked by application_start()
@@ -407,7 +403,7 @@ static void kbapp_init(void)
  @param  event           Bluetooth management event type
  @param  p_event_data    Pointer to the the bluetooth management event data
 
- @return        BT status of the callback function
+ @return        Bluetooth status of the callback function
  ******************************************************************************/
 static wiced_result_t
 kb_management_cback(wiced_bt_management_evt_t event,
@@ -437,6 +433,7 @@ kb_management_cback(wiced_bt_management_evt_t event,
 #ifdef LOW_POWER_ENABLE
 
 /*******************************************************************************
+ * Function Name: post_sleep_callback
  * @brief post_sleep_callback function is part of ePDS sleep configuration. It
  *        allows the user to configure the device after waking up from sleep.
  *        This function configures the supermuxable Keyscan columns after
@@ -457,10 +454,8 @@ static void post_sleep_callback (wiced_bool_t restore_configuration)
 
 }
 
-
 /*******************************************************************************
- Function Name:
- keyscane_configure_sleep
+ Function Name: keyscane_configure_sleep
 
  Function Description:
  @brief  The function modifies wiced_sleep_config_t variable for this app to
@@ -491,8 +486,7 @@ wiced_result_t keyscan_configure_sleep(wiced_sleep_config_t app_sleep_config)
 }
 
 /*******************************************************************************
- Function Name:
- keyscan_sleep_handler
+ Function Name: keyscan_sleep_handler
 
  Function Description:
  @brief  This is a sleep permit handler function which polls the device hardware
@@ -539,8 +533,7 @@ uint32_t keyscan_sleep_handler(wiced_sleep_poll_type_t type)
 #endif
 
 /*******************************************************************************
-Function Name:
- application_start
+Function Name: application_start
 
 Function Description:
  @brief Entry point of user Application - The user function
@@ -553,8 +546,10 @@ Function Description:
 void application_start(void)
 {
 
-    /* Set PUART as debug UART */
-    wiced_set_debug_uart(WICED_ROUTE_DEBUG_TO_PUART);
+    /*WICED_BT_TRACE_ENABLE*/
+#if defined WICED_BT_TRACE_ENABLE || defined TRACE_TO_WICED_HCI
+        wiced_set_debug_uart(WICED_ROUTE_DEBUG_TO_PUART);
+#endif
 
     WICED_BT_TRACE("\r\n*****Keyscan Application Started!*****\r\n");
 
@@ -569,3 +564,4 @@ void application_start(void)
 #endif
 
 }
+
